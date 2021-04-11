@@ -249,16 +249,11 @@ class FatTreeTopo(StructuredTopo):
                 self.host = (dpid & 0xff)
                 self.dpid = dpid
             elif name:
-                self.dpid = int(name[1:])
-                self.pod = (self.dpid & 0xff0000) >> 16
-                self.sw = (self.dpid & 0xff00) >> 8
-                self.host = (self.dpid & 0xff)
-                #self.dpid = dpid
-                #pod, sw, host = [int(s) for s in name.split('_')]
-                #self.pod = pod
-                #self.sw = sw
-                #self.host = host
-                #self.dpid = (pod << 16) + (sw << 8) + host
+                pod, sw, host = [int(s) for s in name.split('_')]
+                self.pod = pod
+                self.sw = sw
+                self.host = host
+                self.dpid = (pod << 16) + (sw << 8) + host
             else:
                 self.pod = pod
                 self.sw = sw
@@ -270,10 +265,7 @@ class FatTreeTopo(StructuredTopo):
 
         def name_str(self):
             '''Return name string'''
-            if self.host > 1:
-                return "h%i" % self.dpid
-            return "s%i" % self.dpid
-            #return "%i_%i_%i" % (self.pod, self.sw, self.host)
+            return "%i_%i_%i" % (self.pod, self.sw, self.host)
 
         def mac_str(self):
             '''Return MAC string'''
@@ -319,7 +311,6 @@ class FatTreeTopo(StructuredTopo):
         @param k switch degree
         @param speed bandwidth in Gbps
         '''
-        print "Speed: %s" % speed
         core = StructuredNodeSpec(0, k, None, speed, type_str = 'core')
         agg = StructuredNodeSpec(k / 2, k / 2, speed, speed, type_str = 'agg')
         edge = StructuredNodeSpec(k / 2, k / 2, speed, speed,
@@ -329,7 +320,6 @@ class FatTreeTopo(StructuredTopo):
         edge_specs = [StructuredEdgeSpec(speed)] * 3
         super(FatTreeTopo, self).__init__(node_specs, edge_specs)
 
-        self.speed = speed
         self.k = k
         self.id_gen = FatTreeTopo.FatTreeNodeID
         self.numPods = k
@@ -351,13 +341,13 @@ class FatTreeTopo(StructuredTopo):
                     host_id = self.id_gen(p, e, h).name_str()
                     host_opts = self.def_nopts(self.LAYER_HOST, host_id)
                     self.addHost(host_id, **host_opts)
-                    self.addLink(host_id, edge_id, bw=speed)
+                    self.addLink(host_id, edge_id)
 
                 for a in agg_sws:
                     agg_id = self.id_gen(p, a, 1).name_str()
                     agg_opts = self.def_nopts(self.LAYER_AGG, agg_id)
                     self.addSwitch(agg_id, **agg_opts)
-                    self.addLink(edge_id, agg_id, bw=speed)
+                    self.addLink(edge_id, agg_id)
 
             for a in agg_sws:
                 agg_id = self.id_gen(p, a, 1).name_str()
@@ -366,7 +356,7 @@ class FatTreeTopo(StructuredTopo):
                     core_id = self.id_gen(k, c_index, c).name_str()
                     core_opts = self.def_nopts(self.LAYER_CORE, core_id)
                     self.addSwitch(core_id, **core_opts)
-                    self.addLink(core_id, agg_id, bw=speed)
+                    self.addLink(core_id, agg_id)
 
 
     def port(self, src, dst):
@@ -375,8 +365,8 @@ class FatTreeTopo(StructuredTopo):
         Note that the topological significance of DPIDs in FatTreeTopo enables
         this function to be implemented statelessly.
 
-        @param src source switch DPID
-        @param dst destination switch DPID
+        @param src source switch name
+        @param dst destination switch name
         @return tuple (src_port, dst_port):
             src_port: port on source switch leading to the destination switch
             dst_port: port on destination switch leading to the source switch
@@ -426,3 +416,4 @@ class FatTreeTopo(StructuredTopo):
             dst_port += 1
 
         return (src_port, dst_port)
+  

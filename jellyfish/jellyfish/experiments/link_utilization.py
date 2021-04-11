@@ -15,7 +15,7 @@ def count_links(link_use, route):
 
 def calculate_link_utilization(topo, routing, routing_name, topo_name, result_dir):
   filename = '%s/link_util.txt' % result_dir
-  print "outputing to %s" % filename
+  print("outputing to %s" % filename)
   f = open(filename, "w")
   f.write("%s %s\n" % (topo_name, routing_name))
   link_use = dict()

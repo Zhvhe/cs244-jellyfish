@@ -14,7 +14,7 @@ def start_iperf_receiver(receiver, result_dir):
 
 
 def start_iperf_sender(sender, receiver, flows, result_dir):
-  print "Starting iperf from %s (%s) to %s (%s)." % (sender, sender.IP(), receiver, receiver.IP())
+  print("Starting iperf from %s (%s) to %s (%s)." % (sender, sender.IP(), receiver, receiver.IP()))
   sender.popen("iperf-patched/src/iperf -c %s -t 3600 -w 16m -p 5001 -f %d -i 1 -yc > %s/%s-client.txt" % (receiver.IP(), flows, result_dir, sender), shell=True)
 
 
@@ -28,8 +28,8 @@ def get_iface_for_host(host, topo):
 
 def parse_rates(senders, topo, result_dir):
   ifaces = [get_iface_for_host(host, topo) for host in senders]
-  print senders
-  print ifaces
+  print(senders)
+  print(ifaces)
   data = read_list('%s/txrate.txt' % result_dir)
   total = 0.0
   n_samples = 0
@@ -79,5 +79,5 @@ def start_throughput_experiment(net, topo, result_dir, bw, flows, time):
   f = open('%s/throughput.txt' % result_dir, 'w')
   f.write('%s\n' % (rate / bw))
   f.close()
-  print "The average sending rate is: %s" % rate
-  print "The percent utilization is: %s" % (rate / bw)
+  print("The average sending rate is: %s" % rate)
+  print("The percent utilization is: %s" % (rate / bw))

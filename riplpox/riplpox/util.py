@@ -4,11 +4,11 @@ from mininet.util import makeNumeric
 
 from ripl.routing import STStructuredRouting, RandomStructuredRouting
 from ripl.routing import HashedStructuredRouting
-from jellyfish.routing.shortest_path import KPathsRouting
+
 
 # TODO: this code is duplicated from mininet/bin/mn, except for TOPOS/topos.
 # To fix, extract into a library and make mininet an rpox dependency, or
-# extract the topo stuff itself out and make both depend on that shared
+# extract the topo stuff itself out and make both depend on that shared 
 # library.
 def buildTopo( topo, topos ):
     "Create topology from string with format (object, arg1, arg2,...)."
@@ -34,8 +34,7 @@ DEF_ROUTING = 'st'
 ROUTING = {
     'st': STStructuredRouting,
     'random': RandomStructuredRouting,
-    'hashed': HashedStructuredRouting,
-    'kshortest':KPathsRouting
+    'hashed': HashedStructuredRouting
 }
 
 def getRouting( routing_type, topo ):
@@ -43,6 +42,6 @@ def getRouting( routing_type, topo ):
     if routing_type == None:
         routing_type = DEF_ROUTING
     if routing_type not in ROUTING:
-        raise Exception("unknown routing type %s not in %s" % (routing_type,
-                                                               ROUTING.keys()))
+        raise Exception("unknown routing type %s not in %s" % (routing_type, 
+                                                               ROUTING.keys())) 
     return ROUTING[routing_type](topo)

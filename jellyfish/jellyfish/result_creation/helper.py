@@ -52,10 +52,10 @@ def col(n, obj = None, clean = lambda e: e):
         try:
             return clean(obj[n])
         except:
-            print T.colored('col(...): column "%s" not found!' % (n), 'red')
+            print(T.colored('col(...): column "%s" not found!' % (n), 'red'))
             return None
     # We wouldn't know what to do here, so just return None
-    print T.colored('col(...): column "%s" not found!' % (n), 'red')
+    print(T.colored('col(...): column "%s" not found!' % (n), 'red'))
     return None
 
 def transpose(l):
@@ -71,7 +71,7 @@ def stdev(lst):
 
 def xaxis(values, limit):
     l = len(values)
-    return zip(*map(lambda (x,y): (x*1.0*limit/l, y), enumerate(values)))
+    return zip(*map(lambda xy: (xy[1]*1.0*limit/l, xy[0]), enumerate(values)))
 
 def grouper(n, iterable, fillvalue=None):
     "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx"

@@ -12,7 +12,7 @@ def wait(msg, seconds, granularity=10):
     sleep(float(seconds)/granularity)
     sys.stdout.write('.')
     sys.stdout.flush()
-  print 'DONE'
+  print('DONE')
 
 
 def print_centered(msg, fill=' ', window_size=80):
@@ -23,7 +23,7 @@ def print_centered(msg, fill=' ', window_size=80):
   @param window_size the total size of the window
   """
   half = int((window_size - len(msg)) / 2)
-  print fill * half + msg + fill * (window_size - half)
+  print(fill * half + msg + fill * (window_size - half))
 
 
 __colors = ['blue', 'red', 'green', 'coral', 'darkorange', 'brown',
@@ -44,7 +44,7 @@ def print_topo(topo, filename, paths=None):
   @param paths an array of routes (arrays of nodes) to color
          (i.e. [['h1', 's1', 'h2'], ['h3', 'h4']])
   """
-  print paths
+  print(paths)
   if not paths:
     paths = []
   path_edges = {}

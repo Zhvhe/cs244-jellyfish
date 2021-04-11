@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 "CS244 Assignment 3: JellyFish"
 import os
@@ -140,14 +140,14 @@ def main():
       routing_name += " (%d flows)" % args.flows
     calculate_link_utilization(topo, getRouting(args.routing, topo), routing_name, topo_name, result_dir)
     end = time()
-    print "Experiment took "+str(end - start)+" seconds."
+    print("Experiment took " + str(end - start) + " seconds.")
     return
   if args.experiment == 'link_utilization':
-    print "Experiment is a no-op."
+    print("Experiment is a no-op.")
     return
 
 
-  pox_cmd = """python pox/pox.py --no-cli log --file=%s/pox.log,w riplpox.riplpox --topo=%s
+  pox_cmd = """python3 pox/pox.py --no-cli log --file=%s/pox.log,w riplpox.riplpox --topo=%s
     --routing=%s --mode=reactive"""
   pox_args = {
     "stdin" : PIPE,
@@ -185,19 +185,19 @@ def main():
   Popen("killall -9 top bwm-ng tcpdump cat mnexec tc", shell=True).wait()
   end = time()
 
-  print "Experiment took "+str(end - start)+" seconds."
+  print("Experiment took "+str(end - start)+" seconds.")
 
 
 if __name__ == '__main__':
-  print "Running Jellyfish with options:"
+  print("Running Jellyfish with options:")
   for opt, value in vars(args).items():
-    print "%s: %s" % (opt, value)
+    print("%s: %s" % (opt, value))
   try:
     main()
   except:
-    print "-"*80
-    print "Caught exception.  Cleaning up..."
-    print "-"*80
+    print("-"*80)
+    print("Caught exception.  Cleaning up...")
+    print("-"*80)
     import traceback
     traceback.print_exc()
     os.system("killall -9 top bwm-ng tcpdump cat mnexec iperf; mn -c")

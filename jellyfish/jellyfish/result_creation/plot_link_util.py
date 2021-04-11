@@ -75,7 +75,7 @@ for name in os.listdir(result_dir):
     files.append('%s/%s/link_util.txt' % (result_dir, name))
 plot(files)
 if args.out:
-    print 'saving to', args.out
+    print('saving to', args.out)
     plt.savefig(args.out)
 else:
     plt.show()

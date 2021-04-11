@@ -205,8 +205,8 @@ class JellyfishTopo(StructuredTopo):
          self.switch_is_fully_connected(switch2, added_links, switch_list)):
         switch_list.remove(switch2)
 
-    print added_links
-    print switch_list
+    print(added_links)
+    print(switch_list)
     while True:
       completed = True
       for switch in switch_list:

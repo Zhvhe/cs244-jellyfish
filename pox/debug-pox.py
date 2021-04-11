@@ -62,7 +62,7 @@ def doImport (name):
   def showFail ():
     import traceback
     traceback.print_exc()
-    print "Could not import module:",name
+    print("Could not import module:",name)
 
   try:
     __import__(name, globals(), locals())
@@ -127,7 +127,7 @@ def doLaunch ():
       r = doImport(name)
       if r is False: return False
       if r is True:
-        print "Module", name, "not found"
+        print("Module", name, "not found")
         return False
     name = r
     #print ">>",name
@@ -135,7 +135,7 @@ def doLaunch ():
     if launch in sys.modules[name].__dict__:
       f = sys.modules[name].__dict__[launch]
       if f.__class__ is not doLaunch.__class__:
-        print launch, "in", name, "isn't a function!"
+        print(launch, "in", name, "isn't a function!")
         return False
       multi = False
       if f.func_code.co_argcount > 0:
@@ -145,7 +145,7 @@ def doLaunch ():
                                     inst[cname] + 1 == len(components[cname]))
 
       if multi == False and len(components[cname]) != 1:
-        print name, "does not accept multiple instances"
+        print(name, "does not accept multiple instances")
         return False
 
       try:
@@ -154,7 +154,7 @@ def doLaunch ():
         instText = ''
         if inst[cname] > 0:
           instText = "instance {0} of ".format(inst[cname] + 1)
-        print "Error executing {2}{0}.{1}:".format(name,launch,instText)
+        print("Error executing {2}{0}.{1}:".format(name,launch,instText))
         import inspect
         if inspect.currentframe() is sys.exc_info()[2].tb_frame:
           # Error is with calling the function
@@ -164,7 +164,7 @@ def doLaunch ():
             traceback.print_exc()
           else:
             exc = sys.exc_info()[0:2]
-            print ''.join(traceback.format_exception_only(*exc)),
+            print (''.join(traceback.format_exception_only(*exc)),
           print
           EMPTY = "<Unspecified>"
           code = f.__code__

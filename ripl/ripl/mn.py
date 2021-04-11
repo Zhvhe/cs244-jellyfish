@@ -8,10 +8,8 @@ To use this file to run a RipL-specific topology on Mininet.  Example:
 """
 
 from ripl.dctopo import FatTreeTopo #, VL2Topo, TreeTopo
-from mininet.topo import SingleSwitchTopo
-from jellyfish.topologies.jellyfish import JellyfishTopo
 
-topos = { 'ft': FatTreeTopo, 'single' : SingleSwitchTopo, 'jelly' : JellyfishTopo}
+topos = { 'ft': FatTreeTopo}
 #,
 #          'vl2': VL2Topo,
 #          'tree': TreeTopo }
